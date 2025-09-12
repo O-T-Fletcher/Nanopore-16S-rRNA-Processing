@@ -40,7 +40,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
   Restart your terminal when this process is completed.
 
   # If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
-  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.1710960
+  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
 
 ## What you will start with: 
 <br> Demultiplexed raw fastq.gz files from your sequence run. The Nanopore software (eg MinKNOW) will automatically demultiplex based on associated barcode. You can either manually name the files, or create a csv file with the metadata (barcode, sample name) and have the Nanopore software name the files for you. You can also wait until you have your taxonomy table to replace the barcodes with the sample name.
