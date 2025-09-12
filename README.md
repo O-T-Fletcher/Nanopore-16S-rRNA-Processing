@@ -39,6 +39,9 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
 
   Restart your terminal when this process is completed.
 
+  ## If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
+  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.1710960
+
 ## What you will start with: 
 <br> Demultiplexed raw fastq.gz files from your sequence run. The Nanopore software (eg MinKNOW) will automatically demultiplex based on associated barcode. You can either manually name the files, or create a csv file with the metadata (barcode, sample name) and have the Nanopore software name the files for you. You can also wait until you have your taxonomy table to replace the barcodes with the sample name.
 
@@ -113,10 +116,10 @@ done```
 
 
 ## Licenses and citations used in creation of this pipeline 
-**Emu**: Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods, June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-01520-4. 
-**Dorado**: Oxford Nanopore Technologies. Dorado (v1.1.1), GitHub. https://github.com/nanoporetech/dorado RRID: SCR_025883
-**Cutadapt**: Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1), 10–12. https://doi.org/10.14806/ej.17.1.200
-**Seqkit**: Wei Shen*, Botond Sipos, and Liuyang Zhao. 2024. SeqKit2: A Swiss Army Knife for Sequence and Alignment Processing. iMeta e191. doi:10.1002/imt2.191.
+<br>**Emu**: Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods, June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-01520-4. 
+<br>**Dorado**: Oxford Nanopore Technologies. Dorado (v1.1.1), GitHub. https://github.com/nanoporetech/dorado RRID: SCR_025883
+<br>**Cutadapt**: Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1), 10–12. https://doi.org/10.14806/ej.17.1.200
+<br>**Seqkit**: Wei Shen*, Botond Sipos, and Liuyang Zhao. 2024. SeqKit2: A Swiss Army Knife for Sequence and Alignment Processing. iMeta e191. doi:10.1002/imt2.191.
 
 Dependencies such as Miniconda, pip, conda-forge, bioconda, and osfclient are used for installation and environment management.
 
