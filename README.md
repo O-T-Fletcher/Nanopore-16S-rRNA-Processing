@@ -39,7 +39,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
 
   Restart your terminal when this process is completed.
 
-  ## If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
+  # If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
   Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.1710960
 
 ## What you will start with: 
