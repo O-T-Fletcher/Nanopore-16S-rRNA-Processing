@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it as below."
+authors:
+  - family-names: Fletcher
+    given-names: O. T.
+title: "A user-friendly pipeline for 16S rRNA Nanopore sequence processing"
+version: 1.0.0
+doi: 10.5281/zenodo.17109601
+date-released: 2025-09-12
