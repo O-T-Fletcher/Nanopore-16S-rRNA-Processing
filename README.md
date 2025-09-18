@@ -1,5 +1,5 @@
 # Nanopore-16S-rRNA-Processing-and-Taxonomy
-This is a tutorial style pipeline for people who have raw 16S rRNA Nanopore fastq sequence files and want to process those files and assign taxonomy. It uses pre-built packages for simple, reproducible sequence processing. 
+This is a tutorial style workflow for people who have raw 16S rRNA Nanopore fastq sequence files and want to process those files and assign taxonomy. It uses pre-built packages for simple, reproducible sequence processing. 
 
 This was designed for people with little to no coding experience, or who are new to Nanopore, in mind to make Nanopore 16S rRNA processing and taxonomy assignment easy and accessible for anyone. Each step will attempt to be explained in a way a beginner will understand. If you are at a higher level you may skip to the actual coding steps and ignore the explanations. 
 
@@ -7,8 +7,8 @@ This was created in a Linux terminal. It will likely work just the same with Mac
 
 This work was done under the supervision of Dr. Vanessa Fernandes in the Microbial Ecology lab at Florida Atlantic University. Lab: https://moreirafernandeslab.weebly.com/
 
-  ## If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
-  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
+  ## If you use the following workflow to process your 16S rRNA Nanopore sequences, please use the following citation:
+  Fletcher, O. T. (2025). A user-friendly workflow for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
 
 ## Packages you will need to install: miniconda, python >3.6, pip, osfclient, bioconda, conda-forge, Emu, Dorado, cutadapt, seqkit
 <br> Always check to make sure you have the most recent version!
@@ -19,7 +19,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
   <br> - install pip: ```sudo apt-get install python3-pip``` (pip github: https://github.com/pypa/pip)
   <br> - install osfclient: ```pip install osfclient``` (osfclient github: https://github.com/osfclient/osfclient)
   
-  <br> - Taxonomy database installation: Please visit the Emu repository (https://github.com/treangenlab/emu) for details and explanation. The section you want is the first chunk of code in the **Installation** section. This pipeline will use the SILVA database. Other databases are available, or you can build your own (instructions are on their github). For detailed explanation for beginners:
+  <br> - Taxonomy database installation: Please visit the Emu repository (https://github.com/treangenlab/emu) for details and explanation. The section you want is the first chunk of code in the **Installation** section. This workflow will use the SILVA database. Other databases are available, or you can build your own (instructions are on their github). For detailed explanation for beginners:
       <br> * Use the ```cd``` command to go to the location on your computer where you want to install your database. 
       <br> * Use the ```mkdir``` command to create the directory where you want to store the database. Example: ```mkdir silva```. I recommend staying in this directory during the rest of the intallation process. Then...
       <br> ```export EMU_DATABASE_DIR='silva'``` '**silva**' in this case is the directory name I chose in the previous step. Make sure to **adjust this** based on your chosen directory name.
@@ -124,7 +124,7 @@ done```
 **Note**: When you open your file, it may ask you if you wan't to convert the numbers based on scientific notation. You *must* click yes if you want the relative abundance to add up to 0.1 (100%- which is what it should always add up to for every sample). 
 
 
-## Licenses and citations used in creation of this pipeline 
+## Licenses and citations used in creation of this workflow 
 <br>**Emu**: Kristen D. Curry et al., “Emu: Species-Level Microbial Community Profiling of Full-Length 16S RRNA Oxford Nanopore Sequencing Data,” Nature Methods, June 30, 2022, 1–9, https://doi.org/10.1038/s41592-022-01520-4. 
 <br>**Dorado**: Oxford Nanopore Technologies. Dorado (v1.1.1), GitHub. https://github.com/nanoporetech/dorado RRID: SCR_025883
 <br>**Cutadapt**: Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1), 10–12. https://doi.org/10.14806/ej.17.1.200
