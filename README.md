@@ -7,7 +7,12 @@ This was created in a Linux terminal. It will likely work just the same with Mac
 
 This work was done under the supervision of Dr. Vanessa Fernandes in the Microbial Ecology lab at Florida Atlantic University. Lab: https://moreirafernandeslab.weebly.com/
 
-## Packages you will need to install**: miniconda, python >3.6, pip, osfclient, bioconda, conda-forge, Emu, Dorado, cutadapt, seqkit
+  ## If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
+  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
+
+## Packages you will need to install: miniconda, python >3.6, pip, osfclient, bioconda, conda-forge, Emu, Dorado, cutadapt, seqkit
+<br> Always check to make sure you have the most recent version!
+
 <br> If you don't already have these packages / databases, install in this order... 
   <br> - install miniconda: https://www.anaconda.com/docs/getting-started/miniconda/install#linux-2
   <br> - install python >3.6: ```sudo apt install python3.8``` (python github: https://github.com/python)
@@ -39,11 +44,15 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
 
   Restart your terminal when this process is completed.
 
-  # If you use the following pipeline to process your 16S rRNA Nanopore sequences, please use the following citation:
-  Fletcher, O. T. (2025). A user-friendly pipeline for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
 
 ## What you will start with: 
-<br> Demultiplexed raw fastq.gz files from your sequence run. The Nanopore software (eg MinKNOW) will automatically demultiplex based on associated barcode. You can either manually name the files, or create a csv file with the metadata (barcode, sample name) and have the Nanopore software name the files for you. You can also wait until you have your taxonomy table to replace the barcodes with the sample name.
+<br> Demultiplexed raw fastq.gz files from your sequence run. 
+<br> You will most likely need to change the names of the files from the associated barcode to your sample name. You should create a csv file with the barcode name in the first column and the associated sample name in the second column. Do not label the columns (ex., cell A1 should be Barcode01, cell B1 should be Sample01). If you created the CSV on a Windows system, you will need to install the following package: ```sudo apt install dos2unix```. This is necessary because Windows creates strange characters in their CSV files that are not compatible with Linux or Linux systems, and it may create strange characters in the renaming process. 
+<br> ```cd``` into your folder that contains the barcode files. Put your CSV file in this file.
+<br> You will then run ```dos2unix filename.csv```. This makes the CSV compatible with Linux. Remember to replace filename with the name of your CSV file. 
+<br> Run ```while IFS=, read -r old new; do
+ mv "$old" "$new"
+done < filename.csv``` to change the barcode names to the associated sample names that you entered into your CSV. Remember to replace filename with the name of your CSV file. 
 
 Transfer those demultiplexed files onto the computer and put them inside a folder with a relevant name (recommended). ```cd``` into this directory (folder) in your command line (terminal).
 <br> Example: open terminal
@@ -51,7 +60,7 @@ Transfer those demultiplexed files onto the computer and put them inside a folde
 <br> ```cd Nanopore-16S```
 <br> ```cd 072025_grass``` This is what is referred to as the "project directory" in the following code. You should remain in your project directory while running this code. 
 <br> A folder named *samples* is where all of the fastq.gz files are for the example code. 
-<br> **Tip**: if you can't find a directory, use the ```ls``` function to list all of the folders in the location where you are now.
+<br> **Tip**: if you can't find a directory, use the ```ls``` function to list all of the folders in the location where you are now. If need to know where you are, enter ```pwd```
 <br> **Tip**: if you want to leave the directory, use the ```cd..``` command to go back.
 
 ### Please note that some of the following steps may take hours, depending in your computers computational power and the amount of data you have. _You cannot let your computer sleep during these steps_. The taxonomy step may take multiple days.
@@ -68,7 +77,7 @@ done```
 <br> **Note**: You don't have to name the resulting files *SAMPLENAME*.merged.fastq, but if you don't you will need to watch for that in the next step and update the code based on what you named it. **This applies for all of the steps and the input / output names.** 
 
 ## Remove Barcodes Sequences
-<br> Dorado is a Nanopore tool that allows you to reference the specific barcoding kit that you used in order to remove the barcpde sequences from your sample sequences. In this case, the barcoding kit used is **SQK-NBD114.24**. You may need to replace this based on your barcoding kit.
+<br> Dorado is a Nanopore tool that allows you to reference the specific barcoding kit that you used in order to remove the barcpde sequences from your sample sequences. In this case, the barcoding kit used is **SQK-NBD114.24**. You may need to replace this based on your barcoding kit. Not all kits are supported, check that yours is by running ```dorado --help```.
 <br> ```for file in *merged.fastq; do
   base_name=$(basename "$file" .merged.fastq)
   /home/fernandeslab/Desktop/Nanopore-16S/dorado-0.9.6-linux-x64/bin/dorado trim \
@@ -91,7 +100,7 @@ done```
 <br> The ```seqkit``` function allows you to extract sequences based on a minimum and maximum length. Since the 16S gene is about 1500 base pairs long, it is common to filter for a minimum sequence length of 1300 (```-m 1300```) and a maximum sequence length of 1700 (```-M 1700```). 
 <br> ```for file in *cut.fastq; do
   base_name=$(basename "$file" .fastq)
-  seqkit seq -m 1300 -M 1700 "$file" > "${base_name}_filtered.fastq" -g
+  seqkit seq -m 1300 -M 1700 -g "$file" > "${base_name}_filtered.fastq"
 done```
 
 ## Assign Taxonomy
