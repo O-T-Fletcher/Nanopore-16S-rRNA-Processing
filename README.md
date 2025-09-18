@@ -39,7 +39,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
   <br> First you will need to go to the Dorado github (https://github.com/nanoporetech/dorado) and download the file that is the correct file for your computer type. I recommend putting this file in the same location as your Emu database. If you don't do this, and you're not currently in the directory where you have put this file, the following code will not work and you will need to add the directory location. See Dorado github **Installation** section for details.
   <br> ```tar -xvzf dorado-0.9.6-linux-x64.tar.gz``` **dorado-0.9.6-linux-x64.tar.gz** will need to be changed based on your operating system type / what file you downloaded. 
   
-  <br> - install cutadapt: ```pip install cutadapt``` (cutadapt github: https://github.com/marcelm/cutadapt)
+  <br> - install cutadapt: ```conda install -c bioconda cutadapt``` (cutadapt github: https://github.com/marcelm/cutadapt)
   <br> - install seqkit: ```conda install -c bioconda seqkit``` (seqkit github: https://github.com/shenwei356/seqkit)
 
   Restart your terminal when this process is completed.
