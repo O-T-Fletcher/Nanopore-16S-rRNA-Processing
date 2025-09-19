@@ -51,7 +51,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
 <br> ```cd``` into your folder that contains the barcode files. Put your CSV file in this file.
 <br> You will then run ```dos2unix filename.csv```. This makes the CSV compatible with Linux. Remember to replace filename with the name of your CSV file. 
 <br> Run ```while IFS=, read -r old new; do
- mv "$old" "$new"
+ mv "$old" "$new";
 done < filename.csv``` to change the barcode names to the associated sample names that you entered into your CSV. Remember to replace filename with the name of your CSV file. 
 
 Transfer those demultiplexed files onto the computer and put them inside a folder with a relevant name (recommended). ```cd``` into this directory (folder) in your command line (terminal).
