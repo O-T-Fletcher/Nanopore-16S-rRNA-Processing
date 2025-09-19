@@ -89,8 +89,7 @@ done```
 
 ## Remove Primer Sequences
 <br> The ```cutadapt``` function removes the primer sequences. If you did not do PCR you can skip this step. This is again looped so you don't have to run it for each sample. **Reminder**: if you are not using the same file naming convention (in this case the input files are named **_trimmed.fastq**) you will need to change where those file names are referenced in the code.
-<br> ```for file in *_trimmed.fastq; do base=$(basename "$file" _trimmed.fastq); cutadapt -g AGAGTTTGATCMTGGCTCAG -g CGGTTACCTTGTTACGACTT -o "${base}_cut.fastq" "$file"; done
-```
+<br> ```for file in *_trimmed.fastq; do base=$(basename "$file" _trimmed.fastq); cutadapt -g AGAGTTTGATCMTGGCTCAG -g CGGTTACCTTGTTACGACTT -o "${base}_cut.fastq" "$file"; done```
 <br> **AGAGTTTGATCMTGGCTCAG** (Forward) and **CGGTTACCTTGTTACGACTT** (Reverse) are the primers that I used. You may need to change this part of the code based on which primers you used. The output will be in your specific project directory, in this case “072025_grass” with the naming convention *SAMPLENAME*_cut.fastq. 
 
 ## Filter for 16S rRNA full sequence  
