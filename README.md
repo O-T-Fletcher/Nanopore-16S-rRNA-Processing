@@ -8,7 +8,7 @@ This was created in a Linux terminal. It will likely work just the same with Mac
 This work was done under the supervision of Dr. Vanessa Fernandes in the Microbial Ecology lab at Florida Atlantic University. Lab: https://moreirafernandeslab.weebly.com/
 
   ## If you use the following workflow to process your 16S rRNA Nanopore sequences, please use the following citation:
-  Fletcher, O. T. (2025). A user-friendly workflow for 16S rRNA Nanopore sequence processing. Zenodo. https://doi.org/10.5281/zenodo.17109600
+ Olivia T Fletcher. (2026). O-T-Fletcher/Nanopore-16S-rRNA-Processing (v2.0). Zenodo. https://doi.org/10.5281/zenodo.18636504
 
 ## Packages you will need to install: miniconda, python >3.6, pip, osfclient, bioconda, conda-forge, Emu, Dorado, cutadapt, seqkit
 <br> Always check to make sure you have the most recent version!
