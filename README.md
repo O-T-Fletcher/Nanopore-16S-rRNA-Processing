@@ -41,6 +41,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
   
   <br> - install cutadapt: ```conda install -c bioconda cutadapt``` (cutadapt github: https://github.com/marcelm/cutadapt)
   <br> - install seqkit: ```conda install -c bioconda seqkit``` (seqkit github: https://github.com/shenwei356/seqkit)
+  <br> conda install -c bioconda nanofilt (https://github.com/wdecoster/nanofilt)
 
   Restart your terminal when this process is completed.
 
@@ -49,7 +50,7 @@ This work was done under the supervision of Dr. Vanessa Fernandes in the Microbi
 <br> Demultiplexed raw fastq.gz files from your sequence run. 
 <br> You will most likely need to change the names of the files from the associated barcode to your sample name. You should create a csv file with the barcode name in the first column and the associated sample name in the second column. Do not label the columns (ex., cell A1 should be Barcode01, cell B1 should be Sample01). If you created the CSV on a Windows system, you will need to install the following package: ```sudo apt install dos2unix```. This is necessary because Windows creates strange characters in their CSV files that are not compatible with Linux or Linux systems, and it may create strange characters in the renaming process. 
 <br> ```cd``` into your folder that contains the barcode files. Put your CSV file in this file.
-<br> You will then run ```dos2unix filename.csv```. This makes the CSV compatible with Linux. Remember to replace filename with the name of your CSV file. 
+<br> You will then run ```dos2unix filename.csv```. This makes the CSV compatible with Linux. Remember to replace filename with the name of your CSV file. This step is not needed if you made the CSV with Linux's "LibreOffice"
 <br> Run ```while IFS=, read -r old new; do
  mv "$old" "$new";
 done < filename.csv``` to change the barcode names to the associated sample names that you entered into your CSV. Remember to replace filename with the name of your CSV file. 
@@ -76,12 +77,16 @@ done```
 <br> This is saying "for files in the sample folder (```for dir in samples```), unzip (```gunzip```) and concatenate (```-c```) the files", and it will keep each sample seperate. If you're in the "samples" folder (or whatever you chose to name ypour file) you can just put ```for dir in */```... Unzipping is necessary for this step. The other code in this block loops the code, so you don't have to perform this function for each individual barcode / sample. For this to work, you will need to be inside of the folder / directory that has the folder with all of the samples inside, in this case it's labeled **samples**. This is what you will have to change based on what you named the folder. The output will be in your specific project directory, in my case “072025_grass” with the naming convention *SAMPLENAME*.merged.fastq. 
 <br> **Note**: You don't have to name the resulting files *SAMPLENAME*.merged.fastq, but if you don't you will need to watch for that in the next step and update the code based on what you named it. **This applies for all of the steps and the input / output names.** 
 
+## Filter based on Quality Score (optional)
+<br> NanoFilt is a Nanopore tool that allows you to filter your reads based on the quality score. You can do this during your sequencing run, however you would risk losing a majority of your samples if they are below the quality threshold you applied.
+<br> '''for file in *merged.fastq; do sample=$(basename "$file" .merged.fastq); NanoFilt -q 15 < "$file" > "${sample}.q15.fastq"; done'''
+
 ## Remove Barcodes Sequences
-<br> Dorado is a Nanopore tool that allows you to reference the specific barcoding kit that you used in order to remove the barcpde sequences from your sample sequences. In this case, the barcoding kit used is **SQK-NBD114.24**. You may need to replace this based on your barcoding kit. Not all kits are supported, check that yours is by running ```dorado --help```.
+<br> Dorado is a Nanopore tool that allows you to reference the specific barcoding kit that you used in order to remove the barcpde sequences from your sample sequences. In this case, the barcoding kit used is **SQK-NBD114.96**. You may need to replace this based on your barcoding kit. Not all kits are supported, check that yours is by running ```dorado --help```.
 <br> ```for file in *merged.fastq; do
   base_name=$(basename "$file" .merged.fastq);
   /home/fernandeslab/Desktop/Nanopore-16S/dorado-0.9.6-linux-x64/bin/dorado trim
-    --sequencing-kit SQK-NBD114.24
+    --sequencing-kit SQK-NBD114.96
     --emit-fastq
     "$file" > "${base_name}_trimmed.fastq";
 done```
