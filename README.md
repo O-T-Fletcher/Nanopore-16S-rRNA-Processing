@@ -68,27 +68,22 @@ Transfer those demultiplexed files onto the computer and put them inside a folde
 
 ## Concatenate your fastq.gz files
 <br> There will be multiple fastq.gz files within each sample/ barcode file. These files need to be concatenated. 
-<br> ```for dir in samples/*; do
-  if [ -d "$dir" ]; then
-    sample=$(basename "$dir");
-    gunzip -c "$dir"/*.fastq.gz > "${sample}.merged.fastq";
-  fi;
-done```
+<br> ```for dir in */*; do if [ -d "$dir" ]; then sample=$(basename "$dir"); gunzip -c "$dir"/*.fastq.gz > "${sample}.merged.fastq"; fi; done```
 <br> This is saying "for files in the sample folder (```for dir in samples```), unzip (```gunzip```) and concatenate (```-c```) the files", and it will keep each sample seperate. If you're in the "samples" folder (or whatever you chose to name ypour file) you can just put ```for dir in */```... Unzipping is necessary for this step. The other code in this block loops the code, so you don't have to perform this function for each individual barcode / sample. For this to work, you will need to be inside of the folder / directory that has the folder with all of the samples inside, in this case it's labeled **samples**. This is what you will have to change based on what you named the folder. The output will be in your specific project directory, in my case “072025_grass” with the naming convention *SAMPLENAME*.merged.fastq. 
 <br> **Note**: You don't have to name the resulting files *SAMPLENAME*.merged.fastq, but if you don't you will need to watch for that in the next step and update the code based on what you named it. **This applies for all of the steps and the input / output names.** 
 
 ## Filter based on Quality Score (optional)
 <br> NanoFilt is a Nanopore tool that allows you to filter your reads based on the quality score. You can do this during your sequencing run, however you would risk losing a majority of your samples if they are below the quality threshold you applied.
-<br> ```for file in *merged.fastq; do sample=$(basename "$file" .merged.fastq); NanoFilt -q 15 < "$file" > "${sample}.q15.fastq"; done```
+<br> ```for file in *.merged.fastq; do sample=$(basename "$file" .merged.fastq); NanoFilt -q 15 < "$file" > "${sample}.q15.fastq"; done```
 
 ## Remove Barcodes Sequences
 <br> Dorado is a Nanopore tool that allows you to reference the specific barcoding kit that you used in order to remove the barcpde sequences from your sample sequences. In this case, the barcoding kit used is **SQK-NBD114.96**. You may need to replace this based on your barcoding kit. Not all kits are supported, check that yours is by running ```dorado --help```.
-<br> ```for file in *q15.fastq; do base_name=$(basename "$file" .q15.fastq); /path/to/dorado/database trim --sequencing-kit SQK-NBD114.96 --emit-fastq "$file" > "${base_name}_trimmed.fastq"; done```
+<br> ```for file in *.q15.fastq; do base_name=$(basename "$file" .q15.fastq); /home/fernandeslab/Desktop/Nanopore-16S/dorado-0.9.6-linux-x64/bin/dorado trim --sequencing-kit SQK-NBD114.96 --emit-fastq "$file" > "${base_name}.trimmed.fastq"; done```
 <br> The output will be in your specific project directory, in this case “072025_grass” with the naming convention *SAMPLENAME*_trimmed.fastq. This code is basically saying "for files that end in **.merged.fastq**, run the Dorado function". It again is written as a loop so you don't have to do it for each individual samples. The **/home/fernandeslab/Desktop/Nanopore-16S/dorado-0.9.6-linux-x64/bin/dorado** will need to be the location of your Dorado file that you downloaded. 
 
 ## Remove Primer Sequences
-<br> The ```cutadapt``` function removes the primer sequences. If you did not do PCR you can skip this step. This is again looped so you don't have to run it for each sample. **Reminder**: if you are not using the same file naming convention (in this case the input files are named **_trimmed.fastq**) you will need to change where those file names are referenced in the code.
-<br> ```for file in *_trimmed.fastq; do base=$(basename "$file" _trimmed.fastq); cutadapt -g AGAGTTTGATCMTGGCTCAG -g CGGTTACCTTGTTACGACTT -o "${base}_cut.fastq" "$file"; done```
+<br> The ```cutadapt``` function removes the primer sequences. If you did not do PCR you can skip this step. This is again looped so you don't have to run it for each sample. **Reminder**: if you are not using the same file naming convention (in this case the input files are named **.trimmed.fastq**) you will need to change where those file names are referenced in the code.
+<br> ```for file in *.trimmed.fastq; do sample=$(basename "$file" .trimmed.fastq); cutadapt -g AGAGTTTGATCMTGGCTCAG -g CGGTTACCTTGTTACGACTT -o "${sample}.cut.fastq" "$file"; done```
 <br> **AGAGTTTGATCMTGGCTCAG** (Forward) and **CGGTTACCTTGTTACGACTT** (Reverse) are the primers 27F and 1492R. You may need to change this part of the code based on which primers you used. The output will be in your specific project directory, in this case “072025_grass” with the naming convention *SAMPLENAME*_cut.fastq. 
 
 ## Filter for 16S rRNA full sequence  
@@ -104,8 +99,8 @@ done```
 <br> ```emu_env``` was created earlier in the installation section.
 
 <br> To actually run Emu (on a loop):
-<br> ```for file in *.filtered.fastq; do emu abundance --db /path/to/emu/database "$file"; done```
-<br> The input will be files that end in **_cut_filtered.fastq** and ```--db``` is the location of your database. So **/home/fernandeslab/Desktop/Nanopore-16S/silva** will need to be changed based on where you installed your database and what you named it. 
+<br> ```for file in *.filtered.fastq; do emu abundance --db /home/fernandeslab/Desktop/Nanopore-16S/silva "$file"; done```
+<br> The input will be files that end in **.filtered.fastq** and ```--db``` is the location of your database. So **/home/fernandeslab/Desktop/Nanopore-16S/silva** will need to be changed based on where you installed your database and what you named it. 
 
 <br> The output from the above step will be a file for each sample that has the relative abundance of each taxa found. To combine all of the files into one file that will have all of your samples as columns, the taxa as rows, with the data being relative abundance, run:
 <br> ```emu combine-outputs /home/fernandeslab/Desktop/Nanopore-16S/grass/072025_grass/results tax_id```
